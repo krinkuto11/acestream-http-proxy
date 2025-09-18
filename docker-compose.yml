@@ -1,10 +1,13 @@
 ---
 services:
-  app:
-    build: .
+  acestream:
+    container_name: acestream
+    image: ghcr.io/krinkuto11/acestream-http-proxy:latest
+    restart: unless-stopped
     ports:
-      - '6878:6878'
+       - "6879:6879"
     environment:
-      - ALLOW_REMOTE_ACCESS=no # change to "yes" to allow internet access
-      # add any extra command line option mentioned in https://docs.acestream.net/developers/engine-command-line-options/
-      - EXTRA_FLAGS=''
+       CONF: |-
+         --http-port=6879
+         --https-port=6880
+         --bind-all
