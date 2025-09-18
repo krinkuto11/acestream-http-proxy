@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 #shellcheck disable=SC2086
 
-if [[ $ALLOW_REMOTE_ACCESS == "yes" ]]; then
-	EXTRA_FLAGS="$EXTRA_FLAGS --bind-all"
-fi
+CONF_FILE="/app/acestream.conf"
 
-exec \
-	/app/start-engine \
-	--client-console \
-	$EXTRA_FLAGS \
-	"$@"
+# Requiere CONF
+: "${CONF:?Define la variable de entorno CONF con el contenido del .conf}"
+
+# Escribe exactamente lo recibido (con nuevas líneas)
+printf "%s" "$CONF" > "$CONF_FILE"
+
+# Lanza usando el .conf generado
+exec /app/start-engine --client-console "@/app/acestream.conf"
