@@ -3,11 +3,26 @@
 
 CONF_FILE="/app/acestream.conf"
 
-# Requiere CONF
-: "${CONF:?Define la variable de entorno CONF con el contenido del .conf}"
+# Build configuration from environment variables
+CONF_CONTENT=""
 
-# Escribe exactamente lo recibido (con nuevas líneas)
-printf "%s" "$CONF" > "$CONF_FILE"
+# Add http-port if HTTP_PORT is set
+if [ -n "${HTTP_PORT}" ]; then
+    CONF_CONTENT="${CONF_CONTENT}--http-port=${HTTP_PORT}\n"
+fi
+
+# Add https-port if HTTPS_PORT is set
+if [ -n "${HTTPS_PORT}" ]; then
+    CONF_CONTENT="${CONF_CONTENT}--https-port=${HTTPS_PORT}\n"
+fi
+
+# Add bind-all if BIND_ALL is set to any non-empty value
+if [ -n "${BIND_ALL}" ]; then
+    CONF_CONTENT="${CONF_CONTENT}--bind-all\n"
+fi
+
+# Write configuration to file
+printf "%b" "$CONF_CONTENT" > "$CONF_FILE"
 
 # Lanza usando el .conf generado
 exec /app/start-engine --client-console "@/app/acestream.conf"

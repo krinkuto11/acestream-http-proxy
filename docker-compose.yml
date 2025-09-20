@@ -5,9 +5,8 @@ services:
     image: ghcr.io/krinkuto11/acestream-http-proxy:latest
     restart: unless-stopped
     ports:
-       - "6879:6879"
+      - "6879:6879"
     environment:
-       CONF: |-
-         --http-port=6879
-         --https-port=6880
-         --bind-all
+      HTTP_PORT: 6879
+      HTTPS_PORT: 6880
+      BIND_ALL: "true"
