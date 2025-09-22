@@ -21,6 +21,11 @@ if [ -n "${BIND_ALL}" ]; then
     CONF_CONTENT="${CONF_CONTENT}--bind-all\n"
 fi
 
+# Add P2P port if P2P_PORT is set
+if [ -n "${P2P_PORT}" ]; then
+    CONF_CONTENT="${CONF_CONTENT}--port=${P2P_PORT}\n"
+fi
+
 # Write configuration to file
 printf "%b" "$CONF_CONTENT" > "$CONF_FILE"
 
