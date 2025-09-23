@@ -52,6 +52,11 @@ services:
     container_name: acestream-http-proxy
     ports:
       - 6878:6878
+    environment:
+      - P2P_PORT=8621 # Port Forwarding
+      - HTTP_PORT=6878
+      - HTTPS_PORT=6879 # Must be different from http port
+      - CONF="<CMD args with newlines between them>"
 ```
 
 for an example, see the [docker-compose.yml](./docker-compose.yml) file in this repository.
