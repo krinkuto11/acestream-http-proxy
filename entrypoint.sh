@@ -8,7 +8,7 @@ CONF_CONTENT=""
 
 # Add internal-buffering module if INTERNAL_BUFFERING is set to a non-empty value
 if [ -n "${INTERNAL_BUFFERING}" ]; then
-    CONF_CONTENT="${CONF_CONTENT}--use-internal-buffering\n"
+    CONF_CONTENT="${CONF_CONTENT}--use-internal-buffering=${INTERNAL_BUFFERING}\n"
 fi
 
 # Add http-port if HTTP_PORT is set
