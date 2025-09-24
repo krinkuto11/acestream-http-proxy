@@ -6,6 +6,11 @@ CONF_FILE="/app/acestream.conf"
 # Build configuration from environment variables
 CONF_CONTENT=""
 
+# Add internal-buffering module if INTERNAL_BUFFERING is set to a non-empty value
+if [ -n "${INTERNAL_BUFFERING}" ]; then
+    CONF_CONTENT="${CONF_CONTENT}--use-internal-buffering\n"
+fi
+
 # Add http-port if HTTP_PORT is set
 if [ -n "${HTTP_PORT}" ]; then
     CONF_CONTENT="${CONF_CONTENT}--http-port=${HTTP_PORT}\n"
