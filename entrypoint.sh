@@ -31,6 +31,11 @@ if [ -n "${P2P_PORT}" ]; then
     CONF_CONTENT="${CONF_CONTENT}--port=${P2P_PORT}\n"
 fi
 
+# Add cache-limit (in GB) port if CACHE_LIMIT is set
+if [ -n "${CACHE_LIMIT}" ]; then
+    CONF_CONTENT="${CONF_CONTENT}--cache-limit=${CACHE_LIMIT}\n"
+fi
+
 # Write configuration to file
 printf "%b" "$CONF_CONTENT" > "$CONF_FILE"
 
