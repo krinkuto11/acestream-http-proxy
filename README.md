@@ -40,9 +40,24 @@ http://127.0.0.1:6878/ace/getstream?id=dd1e67078381739d14beca697356ab76d49d1a2
 where `dd1e67078381739d14beca697356ab76d49d1a2d` is the ID of the AceStream channel.
 
 This image can also be deployed to a server, where it can proxy AceStream
-content over HTTP. To able to reach it from remote you need to set ALLOW_REMOTE_ACCESS=yes as environment variable  
+content over HTTP.
 
-You can also run it using docker-compose with
+## Environment Variables
+
+The following environment variables are available to configure the AceStream Engine:
+
+| Variable | Description | Default | Example |
+|----------|-------------|---------|---------|
+| `HTTP_PORT` | HTTP port for the AceStream engine | `6878` | `6878` |
+| `HTTPS_PORT` | HTTPS port for the AceStream engine (must be different from HTTP_PORT) | Not set | `6879` |
+| `P2P_PORT` | Port for P2P connections (useful for port forwarding) | Not set | `8621` |
+| `BIND_ALL` | Bind to all network interfaces (set to any non-empty value to enable) | Not set | `true` |
+| `INTERNAL_BUFFERING` | Enable internal buffering (set to a non-empty value to enable) | Not set | `true` |
+| `CACHE_LIMIT` | Cache size limit in GB | Not set | `5` |
+
+### Docker Compose Example
+
+You can run it using docker-compose with:
 
 ```yaml
 ---
@@ -53,13 +68,14 @@ services:
     ports:
       - 6878:6878
     environment:
-      - P2P_PORT=8621 # Port Forwarding
       - HTTP_PORT=6878
-      - HTTPS_PORT=6879 # Must be different from http port
-      - CONF="<CMD args with newlines between them>"
+      - HTTPS_PORT=6879
+      - P2P_PORT=8621
+      - BIND_ALL=true
+      - CACHE_LIMIT=5
 ```
 
-for an example, see the [docker-compose.yml](./docker-compose.yml) file in this repository.
+For an example, see the [docker-compose.yml](./docker-compose.yml) file in this repository.
 
 ## Contributing
 
